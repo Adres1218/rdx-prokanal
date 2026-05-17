@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDX.Pro | Blood Strike Beast Clan</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="Gemini_Generated_Image_gzbmy8gzbmy8gzbm.png">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                        mono: ['Share Tech Mono', 'monospace'],
+                    },
+                    colors: {
+                        bloodRed: {
+                            400: 'var(--neon-primary-light)',
+                            500: 'var(--neon-primary)',
+                            600: 'var(--neon-primary-dark)',
+                            700: 'var(--neon-primary-deep)',
+                            900: 'var(--neon-primary-bg)',
+                        },
+                        cyberNeon: '#00ffcc',
+                        darkBg: '#060609',
+                        cardBg: '#0c0c12',
+                    },
+                    boxShadow: {
+                        'neon-red': '0 0 12px rgba(var(--shadow-neon-rgba), 0.45)',
+                        'neon-red-lg': '0 0 30px rgba(var(--shadow-neon-rgba), 0.8)',
+                        'neon-cyan': '0 0 12px rgba(0, 255, 204, 0.35)',
+                        'neon-cyan-lg': '0 0 25px rgba(0, 255, 204, 0.6)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --neon-primary-light: #c084fc;
+            --neon-primary: #a855f7;
+            --neon-primary-dark: #9333ea;
+            --neon-primary-deep: #7e22ce;
+            --neon-primary-bg: #220038;
+            --radial-glow: #1b003a;
+            --shadow-neon-rgba: 168, 85, 247;
+        }
+
+        body[data-theme="cyan"] {
+            --neon-primary-light: #67e8f9;
+            --neon-primary: #06b6d4;
+            --neon-primary-dark: #0891b2;
+            --neon-primary-deep: #0e7490;
+            --neon-primary-bg: #083344;
+            --radial-glow: #022d42;
+            --shadow-neon-rgba: 6, 182, 212;
+        }
+
+        body[data-theme="emerald"] {
+            --neon-primary-light: #6ee7b7;
+            --neon-primary: #10b981;
+            --neon-primary-dark: #059669;
+            --neon-primary-deep: #047857;
+            --neon-primary-bg: #064e3b;
+            --radial-glow: #022c1f;
+            --shadow-neon-rgba: 16, 185, 129;
+        }
+
+        body[data-theme="orange"] {
+            --neon-primary-light: #fdba74;
+            --neon-primary: #f97316;
+            --neon-primary-dark: #ea580c;
+            --neon-primary-deep: #c2410c;
+            --neon-primary-bg: #431407;
+            --radial-glow: #2b0b00;
+            --shadow-neon-rgba: 249, 115, 22;
+        }
+
+        body[data-theme="magenta"] {
+            --neon-primary-light: #fbcfe8;
+            --neon-primary: #ec4899;
+            --neon-primary-dark: #db2777;
+            --neon-primary-deep: #be185d;
+            --neon-primary-bg: #500724;
+            --radial-glow: #310012;
+            --shadow-neon-rgba: 236, 72, 153;
+        }
+
+        /* Global morph transition for all dynamic colors */
+        body, header, footer, section, button, div.bg-cardBg, div.border, a, span, p, h1, h2, h3, h4, i, input, textarea {
+            transition: background-color 0.8s ease, border-color 0.8s ease, color 0.8s ease, box-shadow 0.8s ease, text-shadow 0.8s ease;
+        }
+
+        #matrixCanvas, #customCursor, #radioDisk, .vis-bar {
+            transition: none !important;
+        }
+
+        body {
+            background-color: #060609;
+            font-family: 'Rajdhani', sans-serif;
+            color: #f3f4f6;
+            background-image:
+                radial-gradient(circle at top, var(--radial-glow) 0%, #060609 80%),
+                linear-gradient(rgba(12, 12, 18, 0.2) 50%, rgba(0, 0, 0, 0.5) 50%);
+            background-size: 100% 100%, 100% 4px;
+            overflow-x: hidden;
+            transition: filter 0.3s ease;
+        }
+
+        /* Set Custom Crosshair cursor only on devices with precision pointers (desktops/laptops) */
+        @media (pointer: fine) {
+            body {
+                cursor: none;
+            }
+
+            #customCursor {
+                display: block;
+            }
+        }
+
+        /* Custom Crosshair cursor style */
+        #customCursor {
+            width: 26px;
+            height: 26px;
+            border: 2px solid #a855f7;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: width 0.15s ease, height 0.15s ease, border-color 0.15s ease;
+            display: none;
+        }
+
+        #customCursor::before,
+        #customCursor::after {
+            content: '';
+            position: absolute;
+            background: #a855f7;
+        }
+
+        #customCursor::before {
+            top: 50%;
+            left: -4px;
+            width: 4px;
+            height: 2px;
+            transform: translateY(-50%);
+        }
+
+        #customCursor::after {
+            left: 50%;
+            top: -4px;
+            height: 4px;
+            width: 2px;
+            transform: translateX(-50%);
+        }
+
+        #customCursor.hovering {
+            width: 38px;
+            height: 38px;
+            border-color: #00ffcc;
+            box-shadow: 0 0 10px #00ffcc;
+        }
+
+        #customCursor.click-effect {
+            width: 48px;
+            height: 48px;
+            border-color: #ffaa00;
+            box-shadow: 0 0 20px #ff3b44;
+        }
+
+        /* Glitch Animation for RDX.PRO Title */
+        .glitch-text {
+            position: relative;
+            animation: glitch 3s infinite;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: 'RDX.PRO';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #060609;
+        }
+
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -2px 0 #00ffcc;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -2px 0 #a855f7;
+            clip: rect(85px, 450px, 140px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                clip: rect(15px, 9999px, 66px, 0);
+            }
+
+            100% {
+                clip: rect(34px, 9999px, 55px, 0);
+            }
+        }
+
+        @keyframes glitch-anim2 {
+            0% {
+                clip: rect(70px, 9999px, 105px, 0);
+            }
+
+            100% {
+                clip: rect(12px, 9999px, 85px, 0);
+            }
+        }
+
+        .gaming-title {
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 8px rgba(168, 85, 247, 0.7), 0 0 15px rgba(168, 85, 247, 0.25);
+        }
+
+        .cyber-border {
+            border: 1px solid rgba(168, 85, 247, 0.18);
+            box-shadow: inset 0 0 10px rgba(168, 85, 247, 0.03);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cyber-border:hover {
+            border-color: rgba(0, 255, 204, 0.5);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2), inset 0 0 12px rgba(0, 255, 204, 0.08);
+        }
+
+        /* Matrix digital falling code background */
+        #matrixCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+
+        /* Scan line effect */
+        .scanline {
+            background: linear-gradient(to bottom,
+                    rgba(255, 255, 255, 0),
+                    rgba(255, 30, 39, 0.06) 10%,
+                    rgba(255, 255, 255, 0) 20%);
+            animation: scan 6s linear infinite;
+        }
+
+        @keyframes scan {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        /* Beast Mode Glitch Shakes */
+        .beast-shake {
+            animation: beastGlowShake 0.4s infinite alternate;
+        }
+
+        @keyframes beastGlowShake {
+            0% {
+                box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+                filter: hue-rotate(0deg);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(0, 255, 204, 0.75);
+            }
+
+            100% {
+                box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+                filter: hue-rotate(15deg);
+            }
+        }
+
+        .beast-mode-active {
+            animation: heavy-vibe 0.1s infinite;
+        }
+
+        @keyframes heavy-vibe {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(1px, -1px);
+            }
+
+            100% {
+                transform: translate(-1px, 1px);
+            }
+        }
+
+        /* Glowing Custom Logo Container */
+        .logo-glow-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo-glow-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.5) 0%, transparent 70%);
+            z-index: -1;
+            filter: blur(6px);
+            animation: pulse-glow 2s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                transform: scale(0.96);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1.08);
+                opacity: 0.9;
+            }
+        }
+
+        /* Radio Disk spin */
+        .disk-spin {
+            animation: diskSpin 6s linear infinite;
+        }
+        @keyframes diskSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Cyberpunk visualizer bounce */
+        .vis-bar {
+            width: 3px;
+            background-color: #a855f7;
+            height: 4px;
+            border-radius: 9999px;
+            transition: height 0.15s ease;
+        }
+        .playing-vis .vis-bar-1 { animation: bounceVis 0.6s ease-in-out infinite alternate; }
+        .playing-vis .vis-bar-2 { animation: bounceVis 0.4s ease-in-out infinite alternate 0.1s; }
+        .playing-vis .vis-bar-3 { animation: bounceVis 0.8s ease-in-out infinite alternate 0.2s; }
+        .playing-vis .vis-bar-4 { animation: bounceVis 0.5s ease-in-out infinite alternate 0.3s; }
+        .playing-vis .vis-bar-5 { animation: bounceVis 0.7s ease-in-out infinite alternate 0.15s; }
+        
+        @keyframes bounceVis {
+            0% { height: 4px; background-color: #a855f7; }
+            100% { height: 18px; background-color: #00ffcc; }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+    <!-- INTRO ANIMATION SCREEN -->
+    <div id="introScreen" class="fixed inset-0 z-[99999] bg-[#060609] flex flex-col items-center justify-center transition-all duration-1000 ease-in-out">
+        <div class="relative w-32 h-32 sm:w-48 sm:h-48 mb-8">
+            <!-- Pulsing/Spinning Rings -->
+            <div class="absolute inset-0 border-4 border-bloodRed-500 rounded-full border-t-transparent border-b-transparent animate-spin" style="animation-duration: 2s;"></div>
+            <div class="absolute inset-2 border-4 border-[#00ffcc] rounded-full border-l-transparent border-r-transparent animate-spin" style="animation-duration: 3s; animation-direction: reverse;"></div>
+            <!-- Logo inside -->
+            <img src="Gemini_Generated_Image_gzbmy8gzbmy8gzbm.png" alt="RDX Core" class="absolute inset-4 w-[calc(100%-2rem)] h-[calc(100%-2rem)] rounded-full object-cover shadow-neon-red-lg p-1 animate-pulse">
+        </div>
+        
+        <div class="font-mono text-[#00ffcc] text-sm sm:text-base tracking-widest uppercase flex flex-col items-center">
+            <span id="loadingText" class="mb-3 animate-pulse">// SİBER PORTAL BAŞLATILIYOR</span>
+            <div class="w-64 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-gray-800 shadow-neon-cyan relative">
+                <div id="loadingBar" class="absolute top-0 left-0 h-full bg-gradient-to-r from-bloodRed-500 to-[#00ffcc] w-0 transition-all duration-150 shadow-neon-red"></div>
+            </div>
+            <span id="loadingPercentage" class="mt-2 text-xs text-gray-500 font-bold">0%</span>
+            
+            <!-- PORTALA GİRİŞ YAPMA BUTONU (Mobile & iOS Autoplay Tetikleyicisi) -->
+            <button id="enterPortalBtn" class="mt-5 px-8 py-3 bg-bloodRed-900/60 hover:bg-bloodRed-500 hover:text-white border-2 border-bloodRed-500/70 hover:border-[#00ffcc] text-red-500 font-bold font-orbitron text-xs sm:text-sm rounded-xl shadow-neon-red hover:shadow-neon-cyan-lg transition-all duration-300 hidden uppercase tracking-[0.2em] animate-pulse cursor-pointer">
+                <i class="fa-solid fa-play mr-2"></i> PORTALA GİRİŞ YAP (SESİ AÇ)
+            </button>
+        </div>
+    </div>
+
+    <!-- Glowing Custom Gaming Cursor -->
+    <div id="customCursor"></div>
+
+    <!-- Matrix Code Rain Layer -->
+    <canvas id="matrixCanvas"></canvas>
+    
+    <!-- Sürekli Arka Plan Sesi -->
+    <audio id="beastBgAudio" src="Canavar Modu.mp3" loop autoplay></audio>
+
+    <!-- Canavar Ses İstasyonu Floating Widget -->
+    <div id="cyberRadioWidget" class="fixed bottom-6 left-6 z-[9999] bg-black/85 backdrop-blur-md border border-bloodRed-500/40 rounded-2xl p-3 flex items-center gap-4 shadow-[0_0_20px_rgba(255,30,39,0.3)] transition-all duration-500 hover:border-[#00ffcc] hover:shadow-[0_0_25px_rgba(0,255,204,0.4)] max-w-[280px] sm:max-w-[320px] w-[calc(100%-3rem)]">
+        <!-- Rotating Album Art -->
+        <div class="relative shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full border-2 border-bloodRed-500/60 overflow-hidden shadow-neon-red group cursor-pointer" onclick="toggleBeastMode()">
+            <img src="Gemini_Generated_Image_gzbmy8gzbmy8gzbm.png" id="radioDisk" class="w-full h-full object-cover transition-transform duration-1000">
+            <!-- Central core pulse -->
+            <div class="absolute inset-0 bg-gradient-to-t from-red-600/40 to-transparent pointer-events-none"></div>
+        </div>
+        
+        <!-- Info & Controls -->
+        <div class="flex-grow min-w-0">
+            <div class="text-[9px] font-mono text-bloodRed-500 uppercase tracking-widest leading-none mb-1">// CANAVAR SEKTÖRÜ</div>
+            <div class="text-[11px] sm:text-xs font-bold font-orbitron text-white truncate leading-none mb-2">Canavar Modu - RDX.PRO</div>
+            
+            <!-- Play controls -->
+            <div class="flex items-center gap-3">
+                <button onclick="toggleBeastMode()" id="radioPlayBtn" class="bg-bloodRed-900/30 hover:bg-bloodRed-500/20 text-[#00ffcc] border border-[#00ffcc]/30 rounded px-2 py-0.5 text-[9px] font-mono font-bold uppercase transition-all tracking-wider flex items-center gap-1 cursor-pointer">
+                    <i class="fa-solid fa-play" id="radioPlayIcon"></i> <span id="radioPlayText">BAŞLAT</span>
+                </button>
+                
+                <!-- Micro Visualizer Bars -->
+                <div class="flex items-end gap-0.5 h-4.5" id="audioVisualizer">
+                    <span class="vis-bar vis-bar-1"></span>
+                    <span class="vis-bar vis-bar-2"></span>
+                    <span class="vis-bar vis-bar-3"></span>
+                    <span class="vis-bar vis-bar-4"></span>
+                    <span class="vis-bar vis-bar-5"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-darkBg/95 border-b border-bloodRed-900/50 px-4 py-3 lg:px-8">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Logo Brand with Custom Image -->
+            <a href="#" class="flex items-center space-x-3 group cursor-pointer">
+                <div class="logo-glow-wrapper">
+                    <img src="Gemini_Generated_Image_gzbmy8gzbmy8gzbm.png"
+                        alt="RDX.PRO Logo"
+                        class="w-10 h-10 rounded-full border border-bloodRed-500 object-cover shadow-neon-red group-hover:scale-110 transition-all duration-300">
+                </div>
+                <span
+                    class="text-2xl sm:text-3xl font-black gaming-title tracking-widest text-white group-hover:scale-105 transition-transform glitch-text">
+                    RDX<span class="text-bloodRed-500">.PRO</span>
+                </span>
+            </a>
+
+            <!-- Menu (Responsive hidden on small mobile, navigation is streamlined) -->
+            <nav
+                class="hidden md:flex items-center space-x-6 lg:space-x-8 text-xs sm:text-sm font-semibold uppercase tracking-wider font-orbitron">
+                <a href="#hero" class="hover:text-bloodRed-500 transition-colors cursor-pointer">Ana Ekran</a>
+                <a href="#youtube-hub"
+                    class="hover:text-[#00ffcc] text-bloodRed-500 transition-colors cursor-pointer"><i
+                        class="fa-brands fa-youtube mr-1 animate-pulse"></i> RDX Medya</a>
+                <a href="#roster" class="hover:text-[#00ffcc] text-bloodRed-500 transition-colors cursor-pointer"><i
+                        class="fa-solid fa-users mr-1"></i> Elit Kadro</a>
+                <a href="#apply" class="hover:text-bloodRed-500 transition-colors cursor-pointer">Klan Formu</a>
+            </nav>
+
+            <!-- Beast Mode Controller & Admin Shortcut -->
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <!-- Beast Mode Toggle Button -->
+                <button onclick="toggleBeastMode()" id="beastToggleBtn"
+                    class="bg-bloodRed-900/40 border border-bloodRed-500/70 hover:border-[#00ffcc] text-[10px] sm:text-xs font-bold font-orbitron text-red-500 hover:text-[#00ffcc] px-2.5 py-1.5 rounded-lg flex items-center gap-1 sm:gap-1.5 transition-all shadow-neon-red cursor-pointer">
+                    <i class="fa-solid fa-skull animate-pulse"></i> <span class="hidden xs:inline">BEAST MODE:</span>
+                    KAPALI
+                </button>
+                <a href="#apply"
+                    class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-xs sm:text-sm font-medium rounded-lg group bg-gradient-to-br from-bloodRed-500 to-black text-white cursor-pointer">
+                    <span
+                        class="relative px-3 sm:px-5 py-1.5 sm:py-2 transition-all ease-in duration-75 bg-darkBg rounded-md group-hover:bg-opacity-0 font-bold uppercase tracking-widest font-orbitron">
+                        BAŞVUR
+                    </span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow" id="mainLayout">
+
+        <!-- HERO / LOBBIES SECTION -->
+        <section id="hero" class="relative py-8 sm:py-12 lg:py-20 px-4 overflow-hidden border-b border-bloodRed-900/20">
+            <!-- Grid Background -->
+            <div
+                class="absolute inset-0 bg-[linear-gradient(rgba(255,0,0,0.012)_1px,transparent_1px),linear-gradient(90deg,rgba(255,0,0,0.012)_1px,transparent_1px)] bg-[size:30px_30px] pointer-events-none">
+            </div>
+            <div
+                class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-bloodRed-900/5 rounded-full blur-[120px] pointer-events-none">
+            </div>
+
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
+
+                <!-- Left Column: Portal Info -->
+                <div class="lg:col-span-6 text-left w-full order-2 lg:order-1">
+                    <div
+                        class="inline-flex items-center gap-2 bg-bloodRed-900/30 border border-bloodRed-500/30 px-3 sm:px-4 py-1.5 rounded-full text-[#00ffcc] text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6 animate-bounce font-orbitron shadow-neon-cyan">
+                        <i class="fa-solid fa-radiation animate-spin" style="animation-duration: 4s;"></i> RDX SİBER
+                        PORTAL AKTİF
+                    </div>
+                    <h1
+                        class="text-4xl sm:text-6xl lg:text-8xl font-black gaming-title tracking-tighter mb-4 sm:mb-6 text-white uppercase">
+                        RDX<span class="text-bloodRed-500">.PRO</span>
+                    </h1>
+                    <div id="cyberSubtitle" class="font-mono text-[#00ffcc] text-xs sm:text-sm tracking-widest uppercase mb-6 h-6"></div>
+                    <p
+                        class="text-gray-400 text-sm sm:text-base lg:text-lg font-light mb-6 sm:mb-8 leading-relaxed max-w-xl">
+                        Blood Strike arenalarını sarsan, fırtına gibi esen profesyonel klanımızın resmi karargahına hoş
+                        geldin. Kuralları incele, YouTube kanalımızdaki canavar oynanışları izle ve hemen aşağıdaki klan
+                        formunu doldurarak aramıza katıl!
+                    </p>
+
+                    <!-- Fast Statistics counters -->
+                    <div class="grid grid-cols-3 gap-3 sm:gap-4 border-t border-gray-800/80 pt-5 sm:pt-6 mb-6 sm:mb-8">
+                        <div>
+                            <span class="text-lg sm:text-2xl font-black text-white font-orbitron block">40+</span>
+                            <span class="text-[9px] sm:text-xs text-gray-500 uppercase tracking-wider">Level
+                                Limiti</span>
+                        </div>
+                        <div>
+                            <span
+                                class="text-lg sm:text-2xl font-black text-[#00ffcc] font-orbitron block shadow-neon-cyan-text animate-pulse">ELİT
+                                LOBİ</span>
+                            <span class="text-[9px] sm:text-xs text-gray-500 uppercase tracking-wider">Klan
+                                İletişimi</span>
+                        </div>
+                        <div>
+                            <span class="text-lg sm:text-2xl font-black text-red-500 font-orbitron block">7/24</span>
+                            <span class="text-[9px] sm:text-xs text-gray-500 uppercase tracking-wider">Arenada
+                                Savaş</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                        <a href="#apply"
+                            class="bg-bloodRed-500 hover:bg-bloodRed-600 shadow-neon-red hover:shadow-neon-red-lg text-white font-bold font-orbitron text-sm sm:text-base px-6 py-3.5 rounded-lg uppercase tracking-wider transition-all transform hover:-translate-y-1 text-center cursor-pointer">
+                            <i class="fa-solid fa-id-card-clip mr-2"></i> KATILIM FORMU
+                        </a>
+                        <a href="#youtube-hub"
+                            class="bg-transparent border-2 border-bloodRed-500/70 hover:bg-bloodRed-500/10 text-white font-bold font-orbitron text-sm sm:text-base px-6 py-3.5 rounded-lg uppercase tracking-wider transition-all shadow-neon-red text-center cursor-pointer">
+                            <i class="fa-brands fa-youtube mr-2 text-red-500"></i> YOUTUBE KANALIMIZ
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Column: Glorious Custom Logo Mainframe Container -->
+                <div class="lg:col-span-6 flex justify-center w-full order-1 lg:order-2">
+                    <div
+                        class="relative w-full max-w-sm sm:max-w-md bg-cardBg border-2 border-bloodRed-500/30 p-2 sm:p-3 rounded-2xl overflow-hidden shadow-neon-red-lg">
+                        <div class="scanline absolute inset-0 pointer-events-none"></div>
+                        <!-- Cyber Punk Neon Graphic Frame -->
+                        <div
+                            class="relative bg-black/90 rounded-xl overflow-hidden aspect-[4/3] flex flex-col justify-between p-5 sm:p-8 border border-gray-900">
+                            <div class="flex justify-between items-start">
+                                <span
+                                    class="font-mono text-[9px] sm:text-[10px] text-red-500 tracking-wider animate-pulse">//
+                                    RDX_CORE_DETECTED</span>
+                                <span
+                                    class="bg-[#00ffcc]/10 text-[#00ffcc] text-[9px] sm:text-[10px] font-mono px-2 sm:px-3 py-1 rounded border border-[#00ffcc]/30">SİNYAL
+                                    AKTİF</span>
+                            </div>
+
+                            <!-- Big Center Logo Frame -->
+                            <div class="my-auto text-center flex flex-col items-center gap-3 sm:gap-4">
+                                <div class="relative">
+                                    <div class="absolute -inset-1.5 bg-gradient-to-r from-red-600 to-cyan-400 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-spin"
+                                        style="animation-duration: 10s;"></div>
+                                    <img src="Gemini_Generated_Image_gzbmy8gzbmy8gzbm.png"
+                                        alt="RDX.PRO Resmi Logo"
+                                        class="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full border-4 border-bloodRed-500/60 object-cover shadow-neon-red-lg">
+                                </div>
+                                <div class="text-2xl sm:text-4xl font-black tracking-widest text-white font-orbitron">
+                                    RDX<span class="text-bloodRed-500">.PRO</span></div>
+                                <div
+                                    class="text-[9px] sm:text-[10px] font-bold tracking-[0.4em] sm:tracking-[0.5em] text-[#00ffcc] font-orbitron uppercase">
+                                    ARENANIN YENİ CANAVARI</div>
+                            </div>
+
+                            <div class="flex justify-between items-end border-t border-gray-900 pt-3 sm:pt-4">
+                                <span class="text-[8px] sm:text-[9px] text-gray-500 font-mono">// PLATFORM: MOBILE &
+                                    PC</span>
+                                <span class="text-[8px] sm:text-[9px] text-gray-500 font-mono">KONUM: TURKEY /
+                                    KULU</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- RDX YOUTUBE MEDIA HUB SECTION -->
+        <section id="youtube-hub" class="py-12 sm:py-20 px-4 bg-black/50 border-b border-bloodRed-900/30">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-10 sm:mb-12">
+                    <span
+                        class="text-red-500 font-bold tracking-widest uppercase font-orbitron text-xs shadow-neon-cyan">//
+                        RDX.ALEX YOUTUBE COMMAND CENTER</span>
+                    <h2
+                        class="text-3xl sm:text-5xl lg:text-6xl font-black gaming-title text-white uppercase tracking-wider mt-2">
+                        RDX MEDYA SEKTÖRÜ
+                    </h2>
+                    <p class="text-gray-400 mt-2 text-sm sm:text-base max-w-xl mx-auto">Klan liderimiz <span
+                            class="text-white font-bold">RDX.ALEX</span>'in resmi YouTube kanalındaki en popüler Blood
+                        Strike oynanış videosuna ve siber klan detaylarına buradan göz atın.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                    <!-- Left Big Monitor Frame: Latest Video Trailer (GÖMÜLÜ SHORTS OYNATICI!) -->
+                    <div class="lg:col-span-7 bg-cardBg border-2 border-bloodRed-500/30 rounded-2xl p-4 sm:p-6 relative flex flex-col justify-between shadow-neon-red-lg overflow-hidden beast-shake"
+                        id="terminalMonitor">
+                        <div class="scanline absolute inset-0 pointer-events-none"></div>
+                        <div class="flex justify-between items-center border-b border-gray-800 pb-3 mb-4">
+                            <span class="text-xs font-mono text-red-500 tracking-wider flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping"></span> // TACTICAL LOBBY
+                                FEED
+                            </span>
+                            <span
+                                class="bg-red-500/10 text-red-500 text-[9px] sm:text-[10px] font-mono px-2 py-0.5 rounded border border-red-500/30 animate-pulse">LIDER
+                                SCREEN</span>
+                        </div>
+
+                        <!-- Efsanevi Tam Ekran Video Oynatıcı -->
+                        <div
+                            class="relative w-full aspect-video mx-auto bg-[#060609] rounded-2xl overflow-hidden border-2 border-[#00ffcc]/60 shadow-[0_0_30px_rgba(0,255,204,0.4)] group transition-all duration-700 hover:shadow-[0_0_50px_rgba(0,255,204,0.8)] hover:border-[#00ffcc]">
+                            
+                            <!-- Siber Tarama Çizgisi (Scanline) Animasyonu -->
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#00ffcc]/5 to-transparent pointer-events-none z-20 animate-scan"></div>
+                            
+                            <!-- Glitch Çerçeve Efekti -->
+                            <div class="absolute inset-0 border border-red-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-30 mix-blend-overlay glitch-box"></div>
+
+                            <video id="youtubeEmbedPlayer" class="w-full h-full object-contain z-10 relative opacity-90 group-hover:opacity-100 scale-100 group-hover:scale-105 transition-all duration-700" 
+                                src="mp_.mp4"
+                                controls
+                                autoplay
+                                muted
+                                loop
+                                playsinline>
+                            </video>
+                        </div>
+
+                        <!-- Video Title & Description Plate -->
+                        <div class="mt-4 bg-black/60 border border-gray-800 p-3 rounded-lg text-center relative">
+                            <h4
+                                class="text-xs sm:text-sm font-bold font-orbitron text-[#00ffcc] uppercase tracking-wider">
+                                "Ortam Şekilşükül!" 🤣🤣🤣🤣</h4>
+                            <p class="text-[11px] sm:text-xs text-gray-400 mt-1">Lider Alex'ten "Şimdi senin ortam çok
+                                sıkıcıdır... O sırada bizim ortam" akımı!</p>
+                        </div>
+
+                        <!-- Tactical Watch Button (En güvenilir izleme butonu!) -->
+                        <div class="mt-4 flex flex-col gap-2">
+                            <a href="https://youtube.com/shorts/cTvDsBceIbs?si=0L_b7h7ouULWZmo1" target="_blank"
+                                class="w-full bg-red-600 hover:bg-red-700 hover:shadow-neon-red-lg text-white font-bold font-orbitron py-3 rounded-xl flex items-center justify-center gap-2 uppercase tracking-widest text-[10px] sm:text-xs transition-all cursor-pointer">
+                                <i class="fa-brands fa-youtube text-lg"></i> DOĞRUDAN YOUTUBE'DA AÇ VE İZLE
+                            </a>
+                        </div>
+
+                        <!-- Live Channel Status Details -->
+                        <div class="mt-4 grid grid-cols-3 gap-3 border-t border-gray-800/80 pt-4">
+                            <div class="text-center">
+                                <span class="text-[10px] sm:text-xs text-gray-500 block uppercase font-mono">YouTube
+                                    Abone</span>
+                                <span id="mockSubCount"
+                                    class="text-sm sm:text-lg font-bold font-orbitron text-[#00ffcc]">SİSTEM...</span>
+                            </div>
+                            <div class="text-center">
+                                <span class="text-[10px] sm:text-xs text-gray-500 block uppercase font-mono">Blood
+                                    Strike Kills</span>
+                                <span class="text-sm sm:text-lg font-bold font-orbitron text-red-500">105,250+</span>
+                            </div>
+                            <div class="text-center flex flex-col justify-center items-center">
+                                <a href="https://youtube.com/@rdx.alexpro?si=CMGO2i8JSlA2ujSR" target="_blank"
+                                    class="text-[10px] sm:text-xs font-bold font-orbitron text-[#00ffcc] hover:text-white transition-colors flex items-center gap-1 cursor-pointer">
+                                    KANALA GİT <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Simulated Live Clan Chat & Operations Status -->
+                    <div class="lg:col-span-5 flex flex-col justify-between gap-6">
+
+                        <!-- Klan Canlı Sohbet Simülatörü (Live Chat Simulation) -->
+                        <div
+                            class="bg-cardBg border border-bloodRed-500/20 p-4 sm:p-5 rounded-xl shadow-neon-red relative flex flex-col justify-between h-[340px] sm:h-[380px]">
+                            <div class="flex justify-between items-center border-b border-gray-800 pb-2 mb-3">
+                                <span class="text-xs font-bold font-orbitron text-white flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> KLAN LOBİ
+                                    SOHBETİ (CANLI)
+                                </span>
+                                <span
+                                    class="text-[9px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded border border-red-500/30 font-mono">RDX_RADIO</span>
+                            </div>
+
+                            <!-- Chat Messages Feed Box -->
+                            <div id="clanChatFeed"
+                                class="flex-grow overflow-y-auto space-y-3 pr-1.5 scrollbar-thin text-xs font-mono h-44">
+                                <div class="text-gray-500">// RDX.PRO lobi şifreli iletişim hattı kuruldu.</div>
+                            </div>
+
+                            <!-- Mock input bar for look -->
+                            <div class="mt-3 pt-3 border-t border-gray-800 flex items-center gap-2">
+                                <input type="text" disabled placeholder="Klan formunu doldur..."
+                                    class="bg-black/60 border border-gray-800 rounded px-2.5 py-1.5 text-xs text-gray-500 flex-grow focus:outline-none">
+                                <button disabled
+                                    class="bg-red-950/60 border border-red-500/30 text-gray-500 px-2.5 py-1.5 rounded text-xs font-bold font-orbitron">GÖNDER</button>
+                            </div>
+                        </div>
+
+                        <!-- Taktik Operasyon Odası -->
+                        <div class="bg-cardBg border border-bloodRed-500/20 p-4 sm:p-5 rounded-xl shadow-neon-red">
+                            <span class="text-[10px] font-mono text-[#00ffcc] block">// LATEST BROADCAST ACTIONS</span>
+                            <h3 class="text-base sm:text-lg font-bold font-orbitron text-white uppercase mt-1">Siber
+                                Operasyon İstasyonu</h3>
+                            <p class="text-xs text-gray-400 mt-2">Bu portal, turnuvaları koordine etmek ve Blood Strike
+                                arenalarında en yüksek rütbelere ulaşmak için RDX.PRO üyeleri tarafından anlık olarak
+                                izlenmektedir.</p>
+                            <div class="mt-4 flex items-center justify-between">
+                                <span class="text-[9px] sm:text-[10px] text-gray-500 font-mono">SERVER STATUS: HIGH
+                                    ENERGY</span>
+                                <span class="text-[9px] sm:text-[10px] text-[#00ffcc] font-mono animate-pulse">PING:
+                                    12ms</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RDX SINEMATIK EVRENI SECTION (Local Video Feature: BEN OLMAK SÜPER KAHRAMAN.mp4) -->
+        <section id="cinematic-hub" class="py-12 sm:py-24 px-4 bg-black/60 border-b border-bloodRed-900/30 relative overflow-hidden">
+            <!-- Background elements -->
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(var(--shadow-neon-rgba),0.08)_0%,transparent_60%)] pointer-events-none"></div>
+            
+            <div class="max-w-6xl mx-auto relative z-10">
+                <div class="text-center mb-12 sm:mb-16">
+                    <span class="text-bloodRed-500 font-bold tracking-[0.25em] uppercase font-orbitron text-xs sm:text-sm block animate-pulse">// RDX HIGH-INTENSITY ULTRA CINEMATIC</span>
+                    <h2 class="text-3xl sm:text-5xl lg:text-7xl font-black gaming-title text-white uppercase tracking-wider mt-3">
+                        SİNEMATİK CANAVAR EVRENİ
+                    </h2>
+                    <p class="text-gray-400 mt-3 text-xs sm:text-sm md:text-base max-w-2xl mx-auto">
+                        Savaşçı olmak yetmez, arenada bir <span class="text-[#00ffcc] font-bold">SÜPER KAHRAMAN</span> olmak gerekir. RDX.PRO elit kadromuzun en özel local sinematik kesitini, ultra yüksek çözünürlükle aşağıdan izleyin.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
+                    <!-- Text Description and Clan Lore (Extending the website beautifully) -->
+                    <div class="lg:col-span-5 space-y-6 sm:space-y-8 order-2 lg:order-1 text-left">
+                        <div class="bg-cardBg/80 backdrop-blur-sm border border-bloodRed-500/20 p-5 sm:p-6 rounded-2xl relative shadow-neon-red hover:border-[#00ffcc] hover:shadow-neon-cyan transition-all duration-500 group">
+                            <div class="absolute -top-3 left-6 px-3 py-1 bg-black border border-bloodRed-500 text-[10px] font-mono text-bloodRed-500 rounded-md tracking-widest">// DETAYLI ANALİZ</div>
+                            <h3 class="text-lg sm:text-xl font-bold font-orbitron text-white uppercase mb-3">Ben Olmak Süper Kahraman</h3>
+                            <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">
+                                Bu özel sinematik dosya (<span class="text-bloodRed-500 font-bold font-mono">BEN OLMAK SÜPER KAHRAMAN.mp4</span>), RDX.PRO klan üyelerinin arenalardaki üstün reflekslerini, oyun içi taktiksel dehalarını ve rakiplerine karşı kurdukları mutlak hakimiyeti temsil eder. Her bir kare, klanımızın oyun felsefesini yansıtır.
+                            </p>
+                        </div>
+
+                        <div class="bg-cardBg/80 backdrop-blur-sm border border-bloodRed-500/20 p-5 sm:p-6 rounded-2xl relative shadow-neon-red hover:border-[#00ffcc] hover:shadow-neon-cyan transition-all duration-500 group">
+                            <div class="absolute -top-3 left-6 px-3 py-1 bg-black border border-[#00ffcc] text-[10px] font-mono text-[#00ffcc] rounded-md tracking-widest">// KLAN MİSYONU</div>
+                            <h3 class="text-lg sm:text-xl font-bold font-orbitron text-white uppercase mb-3">Refleks, Uyum ve Canavar Ruhu</h3>
+                            <p class="text-xs sm:text-sm text-gray-400 leading-relaxed">
+                                RDX.PRO yalnızca bir e-spor topluluğu değil; her üyenin birbirine kusursuz uyum sağladığı, anlık taktiksel kararlarla savaşın seyrini değiştiren organize bir güçtür. Bizimle oynamak, bir süper kahraman gibi hissetmenin ilk adımıdır.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Custom HTML5 Glowing Video Player (Extremely Cool!) -->
+                    <div class="lg:col-span-7 order-1 lg:order-2">
+                        <div class="relative rounded-2xl overflow-hidden border-2 border-bloodRed-500/40 p-2 sm:p-3 bg-black/60 shadow-neon-red hover:border-[#00ffcc] hover:shadow-neon-cyan transition-all duration-500">
+                            <!-- High-tech monitor corners/scanners -->
+                            <div class="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-[#00ffcc]"></div>
+                            <div class="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-[#00ffcc]"></div>
+                            <div class="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-[#00ffcc]"></div>
+                            <div class="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-[#00ffcc]"></div>
+                            
+                            <!-- Video Container -->
+                            <div class="relative rounded-lg overflow-hidden bg-black aspect-video group">
+                                <video id="cinematicVideo" class="w-full h-full object-cover" loop playsinline preload="auto">
+                                    <source src="BEN OLMAK SÜPER KAHRAMAN.mp4" type="video/mp4">
+                                    Tarayıcınız bu videoyu desteklemiyor.
+                                </video>
+                                
+                                <!-- Play Overlay Screen -->
+                                <div id="videoPlayOverlay" class="absolute inset-0 bg-black/70 flex flex-col items-center justify-center transition-all duration-500 opacity-100 cursor-pointer group-hover:bg-black/60" onclick="toggleCinematicVideo()">
+                                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-bloodRed-900/60 hover:bg-[#00ffcc]/20 border-2 border-bloodRed-500 hover:border-[#00ffcc] flex items-center justify-center shadow-neon-red hover:shadow-neon-cyan transition-all duration-300 transform group-hover:scale-110">
+                                        <i class="fa-solid fa-play text-white text-2xl sm:text-3xl ml-1 animate-pulse" id="cinematicPlayIcon"></i>
+                                    </div>
+                                    <span class="mt-4 font-mono text-[10px] sm:text-xs text-[#00ffcc] tracking-[0.25em] uppercase font-bold animate-pulse">// CANAVAR SİNEMATİĞİ OYNAT</span>
+                                </div>
+                                
+                                <!-- Audio Toggles / Badges inside Video -->
+                                <div class="absolute bottom-3 right-3 flex gap-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <span class="bg-black/80 border border-bloodRed-500 text-[8px] sm:text-[9px] font-mono text-bloodRed-500 px-2 py-0.5 rounded uppercase tracking-wider">AUDIO HD</span>
+                                    <span class="bg-black/80 border border-[#00ffcc] text-[8px] sm:text-[9px] font-mono text-[#00ffcc] px-2 py-0.5 rounded uppercase tracking-wider">1080P PRO</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KLAN ELİT KADROSU (THE RDX VANGUARD ROSTER) -->
+        <section id="roster" class="py-12 sm:py-20 px-4 bg-darkBg border-b border-bloodRed-900/30">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-10 sm:mb-16">
+                    <span
+                        class="text-[#00ffcc] font-bold tracking-widest uppercase font-orbitron text-xs shadow-neon-cyan">//
+                        RDX VANGUARD ELITE ROSTER</span>
+                    <h2
+                        class="text-3xl sm:text-5xl lg:text-6xl font-black gaming-title text-white uppercase tracking-wider mt-2">
+                        RDX ELİT KADROSU
+                    </h2>
+                    <p class="text-gray-400 mt-2 text-sm sm:text-base max-w-xl mx-auto">Blood Strike arenalarında nam
+                        salmış, klanımızın resmi kemik kadrosu. Onları sahada gördüysen kaçacak delik ara!</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+
+                    <!-- Lider Card (RDX.ALEX) -->
+                    <div
+                        class="bg-cardBg border-2 border-bloodRed-500 p-5 sm:p-6 rounded-xl flex flex-col justify-between relative shadow-neon-red overflow-hidden hover:scale-105 transition-all duration-300">
+                        <div class="absolute top-2 right-2 text-[9px] font-mono text-red-500">#01_FOUNDER</div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-bloodRed-500 overflow-hidden shrink-0">
+                                <img src="Gemini_Generated_Image_gzbmy8gzbmy8gzbm.png"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold font-orbitron text-white">RDX.ALEX</h3>
+                                <span class="text-[9px] text-[#00ffcc] font-bold font-mono tracking-widest block">KURUCU
+                                    & LİDER</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 italic mb-4">"Kafadan tek vuruş, arenalarda kaçış yok!"</p>
+                        <div class="bg-black/50 p-3 rounded border border-gray-900 space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">CİNSİYET:</span>
+                                <span class="text-white font-bold font-orbitron flex items-center gap-1">Erkek <i
+                                        class="fa-solid fa-mars text-blue-400 text-[10px]"></i></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">FAVORİ SİLAH:</span>
+                                <span class="text-red-500 font-bold font-orbitron">AWP / SNIPER</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">ROLÜ:</span>
+                                <span class="text-[#00ffcc] font-bold">Sniper God</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Yardımcı Lider Card (rdx.ibo) -->
+                    <div
+                        class="bg-cardBg border border-bloodRed-500/40 p-5 sm:p-6 rounded-xl flex flex-col justify-between relative hover:border-[#00ffcc] hover:shadow-neon-cyan transition-all duration-300">
+                        <div class="absolute top-2 right-2 text-[9px] font-mono text-red-500">#02_CO_LEADER</div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-bloodRed-500/50 flex items-center justify-center shrink-0 bg-red-950/30">
+                                <i class="fa-solid fa-brain text-red-500 text-lg sm:text-xl animate-pulse"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold font-orbitron text-white">rdx.ibo</h3>
+                                <span class="text-[9px] text-red-500 font-bold font-mono tracking-widest block">YARDIMCI
+                                    LİDER</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 italic mb-4">"Taktiksel deha, sahada kusursuz koordinasyon!"</p>
+                        <div class="bg-black/50 p-3 rounded border border-gray-900 space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">CİNSİYET:</span>
+                                <span class="text-white font-bold font-orbitron flex items-center gap-1">Erkek <i
+                                        class="fa-solid fa-mars text-blue-400 text-[10px]"></i></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">FAVORİ SİLAH:</span>
+                                <span class="text-red-500 font-bold font-orbitron">AK-47 / ASSAULT</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">ROLÜ:</span>
+                                <span class="text-[#00ffcc] font-bold">Taktik Deha</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Destekçi Card (rdx.shark) -->
+                    <div
+                        class="bg-cardBg border border-bloodRed-500/40 p-5 sm:p-6 rounded-xl flex flex-col justify-between relative hover:border-[#00ffcc] hover:shadow-neon-cyan transition-all duration-300">
+                        <div class="absolute top-2 right-2 text-[9px] font-mono text-red-500">#03_SUPPORT</div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-bloodRed-500/50 flex items-center justify-center shrink-0 bg-red-950/30">
+                                <i class="fa-solid fa-fish text-red-500 text-lg sm:text-xl animate-pulse"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold font-orbitron text-white">rdx.shark</h3>
+                                <span class="text-[9px] text-[#00ffcc] font-bold font-mono tracking-widest block">KLAN
+                                    DESTEKÇİSİ</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 italic mb-4">"Arkanı bana yasla, klanı asla arkadan vurdurtmam!"
+                        </p>
+                        <div class="bg-black/50 p-3 rounded border border-gray-900 space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">CİNSİYET:</span>
+                                <span class="text-white font-bold font-orbitron flex items-center gap-1">Erkek <i
+                                        class="fa-solid fa-mars text-blue-400 text-[10px]"></i></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">FAVORİ SİLAH:</span>
+                                <span class="text-red-500 font-bold font-orbitron">M4A1 / SUPPORT</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">ROLÜ:</span>
+                                <span class="text-[#00ffcc] font-bold">Vanguard Shield</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Üye Card (rdx.zexo) -->
+                    <div
+                        class="bg-cardBg border border-bloodRed-500/40 p-5 sm:p-6 rounded-xl flex flex-col justify-between relative hover:border-[#00ffcc] hover:shadow-neon-cyan transition-all duration-300">
+                        <div class="absolute top-2 right-2 text-[9px] font-mono text-red-500">#04_MEMBER</div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-bloodRed-500/50 flex items-center justify-center shrink-0 bg-red-950/30">
+                                <i class="fa-solid fa-user-ninja text-red-500 text-lg sm:text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold font-orbitron text-white">rdx.zexo</h3>
+                                <span class="text-[9px] text-gray-500 font-bold font-mono tracking-widest block">ELİT
+                                    ÜYE</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 italic mb-4">"Ani refleks, hızlı bitirici darbe!"</p>
+                        <div class="bg-black/50 p-3 rounded border border-gray-900 space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">CİNSİYET:</span>
+                                <span class="text-white font-bold font-orbitron flex items-center gap-1">Erkek <i
+                                        class="fa-solid fa-mars text-blue-400 text-[10px]"></i></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">FAVORİ SİLAH:</span>
+                                <span class="text-red-500 font-bold font-orbitron">SMG / SHORT</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">ROLÜ:</span>
+                                <span class="text-[#00ffcc] font-bold">Saldırı Timi</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Üye Card (kadavra) -->
+                    <div
+                        class="bg-cardBg border border-bloodRed-500/40 p-5 sm:p-6 rounded-xl flex flex-col justify-between relative hover:border-[#00ffcc] hover:shadow-neon-cyan transition-all duration-300">
+                        <div class="absolute top-2 right-2 text-[9px] font-mono text-red-500">#05_MEMBER</div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div
+                                class="w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-bloodRed-500/50 flex items-center justify-center shrink-0 bg-red-950/30">
+                                <i class="fa-solid fa-skull-crossbones text-red-500 text-lg sm:text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-base sm:text-lg font-bold font-orbitron text-white">kadavra</h3>
+                                <span class="text-[9px] text-gray-500 font-bold font-mono tracking-widest block">ELİT
+                                    ÜYE</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-400 italic mb-4">"Rakip takımı kadavraya çeviren suikastçı!"</p>
+                        <div class="bg-black/50 p-3 rounded border border-gray-900 space-y-1 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">CİNSİYET:</span>
+                                <span class="text-white font-bold font-orbitron flex items-center gap-1">Erkek <i
+                                        class="fa-solid fa-mars text-blue-400 text-[10px]"></i></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">FAVORİ SİLAH:</span>
+                                <span class="text-red-500 font-bold font-orbitron">M4A1 / SILENCED</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-500">ROLÜ:</span>
+                                <span class="text-[#00ffcc] font-bold">Suikastçı</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- RECRUITMENT FORM SECTION -->
+        <section id="apply" class="py-12 sm:py-20 px-4 max-w-4xl mx-auto">
+            <div class="bg-cardBg border border-bloodRed-900/50 p-5 sm:p-12 rounded-2xl shadow-neon-red relative">
+                <!-- Red Corner Accents -->
+                <div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-bloodRed-500 rounded-tl-lg">
+                </div>
+                <div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-bloodRed-500 rounded-tr-lg">
+                </div>
+                <div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-bloodRed-500 rounded-bl-lg">
+                </div>
+                <div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-bloodRed-500 rounded-br-lg">
+                </div>
+
+                <div class="text-center mb-8 sm:mb-10 flex flex-col items-center gap-2">
+                    <img src="Gemini_Generated_Image_gzbmy8gzbmy8gzbm.png"
+                        class="w-12 h-12 rounded-full border border-bloodRed-500 shadow-neon-red">
+                    <span class="text-xs font-mono text-bloodRed-500 uppercase tracking-widest block">//
+                        RECRUITMENT_SYS_ACTIVE</span>
+                    <h2 class="text-3xl sm:text-5xl font-black gaming-title tracking-widest text-white">KLAN BAŞVURUSU
+                    </h2>
+                    <p class="text-gray-400 mt-2 text-xs sm:text-sm">Formu eksiksiz doldur canavar! Başvurun onaylanırsa
+                        doğrudan WhatsApp veya Instagram üzerinden iletişime geçeceğiz.</p>
+                </div>
+
+                <!-- Form -->
+                <form action="https://formspree.io/f/xqejzjal" method="POST" class="space-y-5 sm:space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+                        <!-- IGN / Name -->
+                        <div>
+                            <label
+                                class="block text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-300 mb-2 font-orbitron">Oyun
+                                İçi İsminiz (IGN)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-bloodRed-500">
+                                    <i class="fa-solid fa-user-astronaut"></i>
+                                </span>
+                                <input type="text" id="ignName" name="Oyun İçi İsim" required placeholder="Örn: RDX_Canavar"
+                                    class="w-full bg-darkBg border border-gray-700 rounded-lg py-2.5 sm:py-3 pl-10 pr-4 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#00ffcc] focus:ring-1 focus:ring-[#00ffcc]">
+                            </div>
+                        </div>
+
+                        <!-- Level & Yaş (Yan yana) -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <!-- Level -->
+                            <div>
+                                <label
+                                    class="block text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-300 mb-2 font-orbitron">Seviye (Level)</label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-bloodRed-500">
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                    </span>
+                                    <input type="number" id="gameLevel" name="Seviye" required min="1" max="150" placeholder="Örn: 55"
+                                        class="w-full bg-darkBg border border-gray-700 rounded-lg py-2.5 sm:py-3 pl-10 pr-4 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#00ffcc] focus:ring-1 focus:ring-[#00ffcc]">
+                                </div>
+                            </div>
+                            <!-- Yaş -->
+                            <div>
+                                <label
+                                    class="block text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-300 mb-2 font-orbitron">Yaşınız</label>
+                                <div class="relative">
+                                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-bloodRed-500">
+                                        <i class="fa-solid fa-calendar-day"></i>
+                                    </span>
+                                    <input type="number" id="gameAge" name="Yaş" required min="10" max="99" placeholder="Örn: 18"
+                                        class="w-full bg-darkBg border border-gray-700 rounded-lg py-2.5 sm:py-3 pl-10 pr-4 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#00ffcc] focus:ring-1 focus:ring-[#00ffcc]">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- WhatsApp Number -->
+                        <div>
+                            <label
+                                class="block text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-300 mb-2 font-orbitron">WhatsApp
+                                Numaranız</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-green-500">
+                                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                                </span>
+                                <input type="tel" id="whatsappNum" name="WhatsApp" required
+                                    placeholder="Başında 0 olmadan (örn: 5551234567)"
+                                    class="w-full bg-darkBg border border-gray-700 rounded-lg py-2.5 sm:py-3 pl-10 pr-4 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#00ffcc] focus:ring-1 focus:ring-[#00ffcc]">
+                            </div>
+                            <span class="text-[10px] text-gray-500 mt-1 block">Onay durumunda WhatsApp üzerinden klan
+                                grubuna davet edileceksiniz.</span>
+                        </div>
+
+                        <!-- Instagram Username -->
+                        <div>
+                            <label
+                                class="block text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-300 mb-2 font-orbitron">Instagram
+                                Kullanıcı Adı (İsteğe Bağlı)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-pink-500">
+                                    <i class="fa-brands fa-instagram text-lg"></i>
+                                </span>
+                                <input type="text" id="instagramUser" name="Instagram" placeholder="Örn: rdx_canavar"
+                                    class="w-full bg-darkBg border border-gray-700 rounded-lg py-2.5 sm:py-3 pl-10 pr-4 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#00ffcc] focus:ring-1 focus:ring-[#00ffcc]">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- GENDER SELECTION (Kadın mı Erkek mi Belirteci - Taktiksel Neon Tasarım) -->
+                    <div class="p-4 bg-black/40 border border-gray-800 rounded-xl">
+                        <label
+                            class="block text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-300 mb-3 font-orbitron">Cinsiyetiniz</label>
+                        <div class="flex items-center gap-6">
+                            <label class="flex items-center gap-2 cursor-pointer group">
+                                <input type="radio" name="Cinsiyet" value="Erkek" checked
+                                    class="w-4 h-4 accent-bloodRed-500 cursor-pointer">
+                                <span
+                                    class="text-xs sm:text-sm font-bold text-white group-hover:text-bloodRed-400 transition-colors flex items-center gap-1.5">
+                                    Erkek <i class="fa-solid fa-mars text-blue-400"></i>
+                                </span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer group">
+                                <input type="radio" name="Cinsiyet" value="Kadın"
+                                    class="w-4 h-4 accent-bloodRed-500 cursor-pointer">
+                                <span
+                                    class="text-xs sm:text-sm font-bold text-white group-hover:text-pink-400 transition-colors flex items-center gap-1.5">
+                                    Kadın <i class="fa-solid fa-venus text-pink-400"></i>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Custom Message -->
+                    <div>
+                        <label
+                            class="block text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-300 mb-2 font-orbitron">Bize
+                            Kendinden Bahset / Başvuru Mesajın</label>
+                        <div class="relative">
+                            <span class="absolute top-3 left-3 text-bloodRed-500">
+                                <i class="fa-solid fa-message"></i>
+                            </span>
+                            <textarea id="appMessage" name="Mesaj" rows="4" required
+                                placeholder="Hangi silahlarda ustasın? Neden RDX.PRO klanına katılmalısın?"
+                                class="w-full bg-darkBg border border-gray-700 rounded-lg py-2.5 sm:py-3 pl-10 pr-4 text-xs sm:text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#00ffcc] focus:ring-1 focus:ring-[#00ffcc]"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="submitBtn"
+                        class="w-full bg-bloodRed-500 hover:bg-[#00ffcc] hover:text-black shadow-neon-red hover:shadow-neon-cyan text-white font-bold font-orbitron text-sm sm:text-lg py-3.5 sm:py-4 rounded-lg uppercase tracking-wider transition-all transform hover:-translate-y-1 cursor-pointer">
+                        <i class="fa-solid fa-bolt mr-2 animate-bounce"></i> BAŞVURUYU SİSTEME GÖNDER
+                    </button>
+                </form>
+
+                <!-- Feedback Message -->
+                <div id="formFeedback" class="hidden mt-6 p-4 rounded-lg text-center font-bold"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- CUSTOM Styled Dialog Popups -->
+    <div id="customDialog"
+        class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/95 backdrop-blur-md hidden">
+        <div
+            class="bg-cardBg border-2 border-bloodRed-500 w-full max-w-md rounded-2xl p-6 shadow-neon-red text-center relative">
+            <div id="dialogIcon" class="text-4xl text-[#00ffcc] mb-4">
+                <i class="fa-solid fa-circle-exclamation"></i>
+            </div>
+            <h4 id="dialogTitle" class="text-2xl font-black font-orbitron text-white uppercase tracking-wider mb-2">
+                SİSTEM MESAJI</h4>
+            <p id="dialogMessage" class="text-gray-400 mb-6 text-sm"></p>
+            <div class="flex items-center justify-center gap-4" id="dialogButtons"></div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-darkBg border-t border-bloodRed-900/40 py-8 px-4 text-center mt-auto">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-gray-500">
+            <div class="flex items-center gap-2 justify-center">
+                <img src="Gemini_Generated_Image_gzbmy8gzbmy8gzbm.png"
+                    class="w-8 h-8 rounded-full border border-bloodRed-500/50">
+                <div class="text-lg font-black gaming-title tracking-widest text-white">
+                    RDX<span class="text-bloodRed-500">.PRO</span>
+                </div>
+            </div>
+            <p class="text-xs sm:text-sm">© 2026 RDX.PRO Blood Strike Canavar Klanı. Tüm Hakları Saklıdır.</p>
+            <div class="flex space-x-4">
+                <a href="#hero" class="hover:text-white transition-colors cursor-pointer"><i
+                        class="fa-solid fa-chevron-up animate-bounce"></i> Üste Çık</a>
+        </div>
+    </footer>
+
+    <!-- Site Scripts -->
+    <script>
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Canavar Ses Modu Durumu
+        let beastModeActive = false;
+
+        // Ses Başlatıcı Fonksiyonu (Farklı Yöntemlerle Tetiklenir)
+        function startBackgroundAudio() {
+            const bgAudio = document.getElementById('beastBgAudio');
+            if (bgAudio && bgAudio.paused) {
+                bgAudio.volume = 0.5; // Canavar Modu için ideal seviye
+                
+                // Müzik ilk kez başlıyorsa ortasından başlatılmasını garanti et
+                if (bgAudio.currentTime === 0 && bgAudio.duration) {
+                    bgAudio.currentTime = bgAudio.duration / 2;
+                }
+
+                const playPromise = bgAudio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log("Müzik başarıyla başlatıldı!");
+                        // Ses başladıysa beast moduna geçişi görsel olarak güncelle
+                        if (!beastModeActive) {
+                            toggleBeastMode(true);
+                        }
+                    }).catch(e => {
+                        console.log("Ses engellendi (Kullanıcı etkileşimi bekleniyor).");
+                    });
+                }
+            }
+        }
+
+        // Beast Mode Toggle Enforcer (Merkezi Kontrolcü)
+        function toggleBeastMode(forceState = null) {
+            const btn = document.getElementById('beastToggleBtn');
+            const bgAudio = document.getElementById('beastBgAudio');
+            const bodyElement = document.body;
+            
+            // Radio Widget Elementleri
+            const radioDisk = document.getElementById('radioDisk');
+            const radioPlayIcon = document.getElementById('radioPlayIcon');
+            const radioPlayText = document.getElementById('radioPlayText');
+            const audioVisualizer = document.getElementById('audioVisualizer');
+
+            // Durumu belirle
+            if (forceState !== null) {
+                beastModeActive = forceState;
+            } else {
+                beastModeActive = !beastModeActive;
+            }
+
+            if (beastModeActive) {
+                // Beast Mode AKTİF
+                if (btn) {
+                    btn.innerHTML = `<i class="fa-solid fa-skull text-[#00ffcc] animate-spin"></i> BEAST MODE: AKTİF`;
+                    btn.classList.add('border-[#00ffcc]', 'text-[#00ffcc]');
+                    btn.classList.remove('text-red-500');
+                }
+                
+                // Gövde titreşim ve ağır vibe animasyonu (Shockwave sarsıntısı)
+                bodyElement.classList.add('beast-mode-active');
+                
+                // 3 saniye sonra titreşimi durdur (şok dalgasının sönümlenmesi)
+                setTimeout(() => {
+                    if (beastModeActive) {
+                        bodyElement.classList.remove('beast-mode-active');
+                    }
+                }, 3000);
+                
+                // Müzik kontrolü
+                if (bgAudio) {
+                    bgAudio.volume = 0.6;
+                    bgAudio.play().catch(e => {
+                        console.log("Sesi oynatmak için kullanıcı etkileşimi lazım.");
+                    });
+                }
+
+                // Radio Widget Güncelleme
+                if (radioDisk) radioDisk.classList.add('disk-spin');
+                if (radioPlayIcon) {
+                    radioPlayIcon.classList.remove('fa-play');
+                    radioPlayIcon.classList.add('fa-pause');
+                }
+                if (radioPlayText) radioPlayText.textContent = "DURDUR";
+                if (audioVisualizer) audioVisualizer.classList.add('playing-vis');
+
+            } else {
+                // Beast Mode KAPALI
+                if (btn) {
+                    btn.innerHTML = `<i class="fa-solid fa-skull animate-pulse"></i> BEAST MODE: KAPALI`;
+                    btn.classList.remove('border-[#00ffcc]', 'text-[#00ffcc]');
+                    btn.classList.add('text-red-500');
+                }
+
+                bodyElement.classList.remove('beast-mode-active');
+
+                if (bgAudio) {
+                    bgAudio.pause();
+                }
+
+                // Radio Widget Kapatma
+                if (radioDisk) radioDisk.classList.remove('disk-spin');
+                if (radioPlayIcon) {
+                    radioPlayIcon.classList.remove('fa-pause');
+                    radioPlayIcon.classList.add('fa-play');
+                }
+                if (radioPlayText) radioPlayText.textContent = "BAŞLAT";
+                if (audioVisualizer) audioVisualizer.classList.remove('playing-vis');
+            }
+        }
+
+        // Genel etkileşimlerle de sesi tetikle
+        document.addEventListener('click', () => {
+            if (beastModeActive) startBackgroundAudio();
+        }, { once: false });
+
+        // Intro Animasyon ve Yükleme Sırası
+        document.addEventListener("DOMContentLoaded", () => {
+            const introScreen = document.getElementById('introScreen');
+            const loadingBar = document.getElementById('loadingBar');
+            const loadingPercentage = document.getElementById('loadingPercentage');
+            const loadingText = document.getElementById('loadingText');
+            const enterPortalBtn = document.getElementById('enterPortalBtn');
+            
+            let progress = 0;
+            
+            // Yüklenme anında kaydırmayı kapat
+            document.body.style.overflow = 'hidden';
+            
+            const loadingInterval = setInterval(() => {
+                progress += Math.floor(Math.random() * 15) + 5;
+                if (progress > 100) progress = 100;
+                
+                loadingBar.style.width = `${progress}%`;
+                loadingPercentage.textContent = `${progress}%`;
+                
+                if (progress >= 30 && progress < 60) loadingText.textContent = "// BAĞLANTI KURULUYOR...";
+                if (progress >= 60 && progress < 85) loadingText.textContent = "// KİMLİK DOĞRULANIYOR...";
+                if (progress >= 85 && progress < 100) loadingText.textContent = "// VERİLER YÜKLENİYOR...";
+                
+                if (progress === 100) {
+                    clearInterval(loadingInterval);
+                    loadingText.textContent = "// ERİŞİM ONAYLANDI";
+                    loadingText.classList.remove("text-[#00ffcc]");
+                    loadingText.classList.add("text-bloodRed-500", "animate-pulse");
+                    
+                    // Giriş butonunu göster (iOS ve Android tarayıcı engellerini aşmak için)
+                    enterPortalBtn.classList.remove('hidden');
+                }
+            }, 120);
+
+            // Giriş Butonu Tıklandığında Tetiklenen Olay
+            enterPortalBtn.addEventListener('click', () => {
+                // 1. Sesi ve Modu başlat (kullanıcı jesti gerçekleştiği için %100 oynatır!)
+                toggleBeastMode(true);
+                
+                // 2. Müzik süresini ortasına ayarla (metadata yüklendiyse)
+                const bgAudio = document.getElementById('beastBgAudio');
+                if (bgAudio) {
+                    bgAudio.addEventListener('loadedmetadata', () => {
+                        bgAudio.currentTime = bgAudio.duration / 2;
+                    });
+                    if (bgAudio.duration) {
+                        bgAudio.currentTime = bgAudio.duration / 2;
+                    }
+                }
+                
+                // 3. Ekranı kapat
+                introScreen.style.opacity = '0';
+                introScreen.style.transform = 'scale(1.1)';
+                
+                setTimeout(() => {
+                    introScreen.style.display = 'none';
+                    document.body.style.overflow = ''; // Kaydırmayı aç
+                }, 1000);
+            });
+
+            // 4. Siber Karakter Karıştırıcı ve Animasyonlu Yazı Efekti (Text Scrambler)
+            class TextScrambler {
+                constructor(el) {
+                    this.el = el;
+                    this.chars = '!<>-_\\/[]{}—=+*^?#________';
+                    this.update = this.update.bind(this);
+                }
+                setText(newText) {
+                    const oldText = this.el.innerText;
+                    const length = Math.max(oldText.length, newText.length);
+                    const promise = new Promise((resolve) => this.resolve = resolve);
+                    this.queue = [];
+                    for (let i = 0; i < length; i++) {
+                        const from = oldText[i] || '';
+                        const to = newText[i] || '';
+                        const start = Math.floor(Math.random() * 40);
+                        const end = start + Math.floor(Math.random() * 40);
+                        this.queue.push({ from, to, start, end });
+                    }
+                    cancelAnimationFrame(this.frameRequest);
+                    this.frame = 0;
+                    this.update();
+                    return promise;
+                }
+                update() {
+                    let output = '';
+                    let complete = 0;
+                    for (let i = 0, n = this.queue.length; i < n; i++) {
+                        let { from, to, start, end, char } = this.queue[i];
+                        if (this.frame >= end) {
+                            complete++;
+                            output += to;
+                        } else if (this.frame >= start) {
+                            if (!char || Math.random() < 0.28) {
+                                char = this.randomChar();
+                                this.queue[i].char = char;
+                            }
+                            output += `<span class="text-[#a855f7]">${char}</span>`;
+                        } else {
+                            output += from;
+                        }
+                    }
+                    this.el.innerHTML = output;
+                    if (complete === this.queue.length) {
+                        this.resolve();
+                    } else {
+                        this.frameRequest = requestAnimationFrame(this.update);
+                        this.frame++;
+                    }
+                }
+                randomChar() {
+                    return this.chars[Math.floor(Math.random() * this.chars.length)];
+                }
+            }
+
+            const phrases = [
+                '// ARENANIN YENİ CANAVARI RDX.PRO',
+                '// TURKEY / KULU LOBİLERİ SALLANIYOR',
+                '// BLOOD STRIKE ELİT KADRO HAZIR',
+                '// BEAST MODE GÜCÜNÜ HİSSET'
+            ];
+            
+            const subtitleEl = document.getElementById('cyberSubtitle');
+            if (subtitleEl) {
+                const scrambler = new TextScrambler(subtitleEl);
+                let counter = 0;
+                const cycleText = () => {
+                    scrambler.setText(phrases[counter]).then(() => {
+                        setTimeout(cycleText, 3500);
+                    });
+                    counter = (counter + 1) % phrases.length;
+                };
+                cycleText();
+            }
+
+            // 5. Dinamik Sayfa Kaydırma Renk Matrisi (Scroll-based Color Shifter)
+            const themeSections = document.querySelectorAll('header, section, footer');
+            const observerOptions = {
+                root: null,
+                threshold: 0.15,
+                rootMargin: "-10% 0px -45% 0px" // scroll down triggers earlier
+            };
+
+            const themeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        let theme = 'purple';
+                        
+                        if (id === 'hero') theme = 'purple';
+                        else if (id === 'youtube-hub') theme = 'cyan';
+                        else if (id === 'cinematic-hub') theme = 'magenta';
+                        else if (id === 'roster') theme = 'emerald';
+                        else if (id === 'apply') theme = 'orange';
+                        
+                        document.body.setAttribute('data-theme', theme);
+                    }
+                });
+            }, observerOptions);
+
+            themeSections.forEach(section => {
+                if (section.id) {
+                    themeObserver.observe(section);
+                }
+            });
+            
+            // 6. Taktiksel Sinematik Oynatıcı Click Dinleyicisi
+            const cVideo = document.getElementById('cinematicVideo');
+            if (cVideo) {
+                cVideo.addEventListener('click', () => {
+                    if (!cVideo.paused) {
+                        toggleCinematicVideo();
+                    }
+                });
+            }
+        });
+
+        // Cinematic Video Player Control
+        function toggleCinematicVideo() {
+            const video = document.getElementById('cinematicVideo');
+            const overlay = document.getElementById('videoPlayOverlay');
+            const bgAudio = document.getElementById('beastBgAudio');
+
+            if (video.paused) {
+                // Play video
+                video.play();
+                overlay.style.opacity = '0';
+                overlay.style.pointerEvents = 'none';
+                
+                // Mute background audio so they can hear the video!
+                if (bgAudio && !bgAudio.paused) {
+                    bgAudio.volume = 0.1;
+                }
+            } else {
+                // Pause video
+                video.pause();
+                overlay.style.opacity = '1';
+                overlay.style.pointerEvents = 'auto';
+                
+                // Restore background audio volume
+                if (bgAudio && !bgAudio.paused) {
+                    bgAudio.volume = 0.6;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
